@@ -12,12 +12,15 @@ describe("team domain", () => {
     expect(team.getManager()).toBeUndefined();
   });
   it("should add a new manager to the team", async function () {
+    const roles = Roles.create("MANAGER");
+
     const manager = await Manager.create(
       "Kaique Mendes",
       "kaique.mendes@gmail.com",
       "@Patati&Patata2",
       "0000000000",
-      "PF"
+      "PF",
+      roles
     );
     const team = Team.create("Gear");
     team.addManager(manager);
@@ -25,12 +28,15 @@ describe("team domain", () => {
   });
   it("should return invalid role manager ", async function () {
     try {
+      const roles = Roles.create("MANAGER");
+
       const manager = await Manager.create(
         "Kaique Mendes",
         "kaique.mendes@gmail.com",
         "@Patati&Patata2",
         "0000000000",
-        "PF"
+        "PF",
+        roles
       );
       const team = Team.create("Gear");
       team.addManager(manager);
@@ -40,12 +46,15 @@ describe("team domain", () => {
   });
   it("should there is already a gender for this team", async function () {
     try {
+      const roles = Roles.create("MANAGER");
+
       const manager = await Manager.create(
         "Kaique Mendes",
         "kaique.mendes@gmail.com",
         "@Patati&Patata2",
         "0000000000",
-        "PF"
+        "PF",
+        roles
       );
       const team = Team.create("Gear");
       team.addManager(manager);

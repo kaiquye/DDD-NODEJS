@@ -4,7 +4,7 @@ import { Leader } from "./leader-model";
 import { RoleLeaderInvalidExepction } from "../exceptions/role-leader-invalid-exepction";
 
 export class Message {
-  constructor(
+  private constructor(
     private id: string,
     private message: string,
     private team?: Team,
@@ -19,7 +19,7 @@ export class Message {
     id?: string
   ) {
     if (leader) {
-      this.isValid(leader);
+      this.managerIsValid(leader);
     }
     if (id === null) {
       return new Message(id, message, team);
@@ -27,7 +27,7 @@ export class Message {
     return new Message(randomUUID(), message, team);
   }
 
-  public static isValid(leader?: Leader) {
+  public static managerIsValid(leader?: Leader) {
     if (leader.getRoles().getRole() !== "LEADER") {
       throw new RoleLeaderInvalidExepction();
     }

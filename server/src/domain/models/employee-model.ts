@@ -12,7 +12,7 @@ export class Employee {
     private name: string,
     private email: string,
     private password: string,
-    private document: string,
+    private document: Document,
     private roles: Roles,
     manager?: Manager
   ) {}
@@ -23,14 +23,18 @@ export class Employee {
     password: string,
     document: string,
     document_type: string,
+    role: Roles,
     manager?: Manager,
     id?: string
   ) {
+    if (role.getRole() !== "EMPLOYEE") {
+      throw new Error("invalid roles");
+    }
     this.nameIsValid(name);
     this.emailIsValid(email);
 
     password = await Password.create(password);
-    document = Document.create(document, document_type);
+    const newDocument = Document.create(document, document_type);
 
     if (id === undefined) {
       return new Employee(
@@ -38,20 +42,12 @@ export class Employee {
         name,
         email,
         password,
-        document,
-        Roles.create("EMPLOYEE"),
+        newDocument,
+        role,
         manager
       );
     }
-    new Employee(
-      id,
-      name,
-      email,
-      password,
-      document,
-      Roles.create("EMPLOYEE"),
-      manager
-    );
+    return new Employee(id, name, email, password, newDocument, role, manager);
   }
 
   public static nameIsValid(name: string) {
@@ -63,7 +59,6 @@ export class Employee {
 
   public static emailIsValid(email: string) {
     const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    console.log(email.match(regexEmail));
     if (!email.match(regexEmail)) {
       throw new InvalidEmailException();
     }

@@ -3,9 +3,9 @@ import { ValidateCpfServices } from "../services/validate-cpf-services";
 export class Document {
   constructor(private number: string) {}
 
-  public static create(document: string, type: string): string {
+  public static create(document: string, type: string) {
     this.isValid(document, type);
-    return new Document(document).getValue();
+    return new Document(document);
   }
 
   private static isValid(number: string, type: string): void {
