@@ -5,26 +5,27 @@ import { RoleManagerInvalidExepction } from "../exceptions/role-manager-invalid-
 import { Message } from "./message-model";
 
 export class Team {
-  constructor(
+  private constructor(
     private name: string,
-    private id?: string,
     private manager?: Manager,
     private messages?: Message[],
+    private id?: string,
     private created_At?: Date,
     private update_At?: Date
   ) {
     this.messages = [];
   }
 
-  public static create(name: string, id?: string) {
+  public static create(name: string, manager?: Manager, id?: string) {
     if (id === undefined) {
-      return new Team(name, randomUUID());
+      return new Team(name, manager, null, randomUUID());
     }
-    return new Team(name, id);
+    return new Team(name, manager, null, id);
   }
 
   public addManager(manager: Manager) {
-    if (manager.getRoles().getRole() !== "MANAGER") {
+    console.log(manager);
+    if (manager?.getRoles()?.getRole() !== "MANAGER") {
       throw new RoleManagerInvalidExepction();
     }
     if (this.manager?.getId()) {
@@ -54,5 +55,9 @@ export class Team {
   }
   public getId() {
     return this.id;
+  }
+
+  public static toDomain(data) {
+    return new Team(data?.name, data?.manager, data?.messages, data?.id);
   }
 }

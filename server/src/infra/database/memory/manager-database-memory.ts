@@ -17,4 +17,8 @@ export class ManagerDatabaseMemory implements IManagerRepository {
   async findById(id: string): Promise<Manager> {
     return this.database.find((manager) => manager.getId() === id);
   }
+
+  async exists(email: string): Promise<Manager> {
+    return this.database.find((manager) => manager.getEmail() === email);
+  }
 }

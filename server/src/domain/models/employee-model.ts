@@ -82,4 +82,15 @@ export class Employee {
   public getRoles() {
     return this.roles;
   }
+
+  public static toDomain(props) {
+    return new Employee(
+      props.id,
+      props.name,
+      props.email,
+      props.password,
+      props.document,
+      props.roles
+    );
+  }
 }

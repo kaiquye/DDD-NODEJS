@@ -16,4 +16,12 @@ export class TeamDatabaseMemory implements ITeamRepository {
     this.database.push(team);
     return team;
   }
+
+  async addManager(team: Team): Promise<Team> {
+    this.database.push(team);
+    return team;
+  }
+  async exists(name: string): Promise<Team> {
+    return this.database.find((team) => team.getName() === name);
+  }
 }

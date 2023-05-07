@@ -16,4 +16,7 @@ export class EmployeeDatabaeMemory implements IEmployeeRepository {
   async findById(id: string): Promise<Employee> {
     return this.database.find((employee) => employee.getId() === id);
   }
+  async exist(email: string): Promise<Employee> {
+    return this.database.find((employee) => employee.getEmail() === email);
+  }
 }
