@@ -43,7 +43,7 @@ export class CreateManagerUseCase
     const teamFound = await this.teamRep.findById(data.team_id);
     if (!teamFound) {
       Result.NOT_FOUND_EXCEPTION({
-        msg: "team not found",
+        msg: "team not found"clear,
         code: ETeamCodes.not_found,
       });
     }
