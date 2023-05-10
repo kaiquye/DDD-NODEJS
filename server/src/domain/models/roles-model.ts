@@ -14,7 +14,14 @@ export class Roles {
     return new Roles(id, role);
   }
 
+  public getId() {
+    return this.id;
+  }
   public getRole() {
     return this.role;
+  }
+
+  public static toDomain(role) {
+    return new Roles(role.id, role.role);
   }
 }

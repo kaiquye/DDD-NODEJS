@@ -21,7 +21,7 @@ export class Document {
     throw new Error("type document not implement.");
   }
 
-  public getValue() {
+  public getValue(): string {
     return this.number;
   }
 }

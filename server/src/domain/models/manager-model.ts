@@ -4,8 +4,6 @@ import { randomUUID } from "crypto";
 import { InvalidNameExceptions } from "../exceptions/invalid-name-exceptions";
 import { InvalidEmailException } from "../exceptions/invalid-email-exceptions";
 import { Password } from "../value-object/password-value-object";
-import { Leader } from "./leader-model";
-import { Employee } from "./employee-model";
 
 export class Manager {
   private constructor(
@@ -55,12 +53,15 @@ export class Manager {
 
   public static emailIsValid(email: string) {
     const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!email) {
+      throw new InvalidEmailException();
+    }
     if (!email.match(regexEmail)) {
       throw new InvalidEmailException();
     }
   }
 
-  public getId() {
+  public getId(): string {
     return this.id;
   }
   public getName() {
@@ -77,5 +78,15 @@ export class Manager {
   }
   public getRoles() {
     return this.roles;
+  }
+  public static toDomain(props) {
+    return new Manager(
+      props.id,
+      props.name,
+      props.email,
+      props.password,
+      props.document,
+      props.roles
+    );
   }
 }
